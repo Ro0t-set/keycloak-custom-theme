@@ -2,6 +2,10 @@
 
 A modern, clean, and professional custom theme for Keycloak login pages.
 
+## Documentation
+
+Full documentation available at: [https://ro0t-set.github.io/keycloak-custom-theme/](https://ro0t-set.github.io/keycloak-custom-theme/)
+
 ## Features
 
 - **Modern Design**: Clean and contemporary UI with smooth gradients and subtle shadows
@@ -11,24 +15,46 @@ A modern, clean, and professional custom theme for Keycloak login pages.
 - **Clean Error Handling**: Simple, non-intrusive error messages
 - **Accessibility**: ARIA-compliant form controls and labels
 
-## Installation
+## Quick Start with Docker
 
-1. Copy the `interno1` folder to your Keycloak themes directory:
+```dockerfile
+FROM quay.io/keycloak/keycloak:26.1.5
+
+COPY ./custom/ /opt/keycloak/themes/custom/
+
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
+```
+
+Build and run:
+
+```bash
+docker build -t keycloak-custom .
+
+docker run -p 8080:8080 \
+  -e KEYCLOAK_ADMIN=admin \
+  -e KEYCLOAK_ADMIN_PASSWORD=admin \
+  keycloak-custom start-dev
+```
+
+## Manual Installation
+
+1. Copy the `custom` folder to your Keycloak themes directory:
+
    ```bash
-   cp -r interno1 /path/to/keycloak/themes/
+   cp -r custom /path/to/keycloak/themes/
    ```
 
 2. Restart Keycloak or reload the themes
 
 3. In Keycloak Admin Console:
    - Go to **Realm Settings** → **Themes**
-   - Select `interno1` from the **Login Theme** dropdown
+   - Select `custom` from the **Login Theme** dropdown
    - Save changes
 
 ## Theme Structure
 
-```
-interno1/
+```text
+custom/
 └── login/
     ├── theme.properties      # Theme configuration
     └── resources/
@@ -53,6 +79,7 @@ The theme uses HSL colors for easy customization. Main color variables in `style
 ### Typography
 
 The theme uses system fonts for optimal performance:
+
 ```css
 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif
 ```
@@ -60,6 +87,7 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica N
 ### Styling Elements
 
 The theme includes custom styling for:
+
 - Login forms
 - Password fields with visibility toggle
 - Error and success messages
@@ -77,6 +105,7 @@ The theme includes custom styling for:
 ## Screenshots
 
 The theme provides:
+
 - Clean card-based login form
 - Gradient header text
 - Rounded corners and subtle shadows
