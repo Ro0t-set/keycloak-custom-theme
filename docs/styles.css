@@ -368,10 +368,14 @@ code {
     overflow: hidden;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .screenshot {
     width: 100%;
+    height: auto;
     display: block;
 }
 
