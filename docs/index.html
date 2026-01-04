@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keycloak Custom Theme - Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">KC Custom Theme</div>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="gradient-text">Keycloak Custom Theme</h1>
+                <p class="subtitle">A clean, modern theme for Keycloak authentication pages with custom styling and branding support.</p>
+                <div class="cta-buttons">
+                    <a href="#installation" class="btn btn-primary">Get Started</a>
+                    <a href="https://github.com/Ro0t-set/keycloak-custom-theme" class="btn btn-secondary">View on GitHub</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="installation" class="section">
+            <h2>Installation</h2>
+            <p>Deploy the custom theme using Docker. The theme is automatically loaded when you copy it to the themes directory.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span>Dockerfile</span>
+                </div>
+                <pre><code>FROM quay.io/keycloak/keycloak:26.1.5
+
+COPY ./custom/ /opt/keycloak/themes/custom/
+
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]</code></pre>
+            </div>
+
+            <div class="info-card">
+                <h3>Build and run</h3>
+                <div class="code-block">
+                    <pre><code>docker build -t keycloak-custom .
+
+docker run -p 8080:8080 \
+  -e KEYCLOAK_ADMIN=admin \
+  -e KEYCLOAK_ADMIN_PASSWORD=admin \
+  keycloak-custom start-dev</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="structure" class="section">
+            <h2>Theme Structure</h2>
+            <p>The theme follows the standard Keycloak structure with custom styling applied to login pages.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span>Directory Layout</span>
+                </div>
+                <pre><code>custom/
+└── login/
+    ├── theme.properties
+    └── resources/
+        ├── css/
+        │   └── styles.css
+        └── img/
+            └── favicon.svg</code></pre>
+            </div>
+
+            <div class="screenshot-container">
+                <img src="../doc/image.png" alt="Keycloak Custom Theme Screenshot" class="screenshot">
+            </div>
+        </section>
+
+        <section id="configuration" class="section">
+            <h2>Configuration</h2>
+
+            <div class="info-card">
+                <h3>Theme Properties</h3>
+                <p>The <code>theme.properties</code> file defines the theme configuration:</p>
+                <div class="code-block">
+                    <pre><code>parent=keycloak
+import=common/keycloak
+
+# Custom styles - listed last to properly override parent styles
+styles=css/styles.css</code></pre>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3>Custom Favicon</h3>
+                <p>To add a custom favicon, place your <code>favicon.ico</code> in <code>custom/login/resources/img/</code> and override the <code>template.ftl</code> file to include:</p>
+                <div class="code-block">
+                    <pre><code>&lt;link rel="icon" href="${url.resourcesPath}/img/favicon.ico" /&gt;</code></pre>
+                </div>
+                <p>Note: The <code>favIcon</code> property in theme.properties only works for admin and account consoles, not login pages. See <a href="https://github.com/keycloak/keycloak/discussions/22642" target="_blank">this discussion</a> for more details.</p>
+            </div>
+
+            <div class="info-card">
+                <h3>Customization</h3>
+                <p>Modify <code>custom/login/resources/css/styles.css</code> to adjust colors, fonts, and layout. The theme inherits from the base Keycloak theme, so you only need to override specific properties.</p>
+            </div>
+        </section>
+
+        <section id="activation" class="section">
+            <h2>Theme Activation</h2>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Access Admin Console</h3>
+                        <p>Navigate to your Keycloak admin console at <code>http://localhost:8080</code></p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Select Realm</h3>
+                        <p>Choose the realm where you want to apply the theme from the dropdown menu.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Configure Theme</h3>
+                        <p>Go to <strong>Realm Settings</strong> → <strong>Themes</strong> tab</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Apply Custom Theme</h3>
+                        <p>Select <strong>custom</strong> from the <strong>Login theme</strong> dropdown and save.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="support" class="section">
+            <h2>Requirements</h2>
+            <div class="grid-2">
+                <div class="info-card">
+                    <h3>Keycloak Version</h3>
+                    <p>Tested with Keycloak 26.1.5. Should work with versions 20.x and above.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Docker</h3>
+                    <p>Docker engine 20.10 or higher recommended for building and running the container.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="resources" class="section">
+            <h2>Additional Resources</h2>
+            <div class="info-card">
+                <h3>Official Documentation</h3>
+                <ul>
+                    <li><a href="https://www.keycloak.org/ui-customization/themes" target="_blank">Keycloak Theme Customization Guide</a></li>
+                    <li><a href="https://www.keycloak.org/docs/latest/" target="_blank">Keycloak Official Documentation</a></li>
+                </ul>
+            </div>
+            <div class="info-card">
+                <h3>Community Resources</h3>
+                <ul>
+                    <li><a href="https://github.com/keycloak/keycloak/discussions/22642" target="_blank">Custom Favicon Implementation Discussion</a></li>
+                    <li><a href="https://github.com/Ro0t-set/keycloak-custom-theme" target="_blank">Project Repository on GitHub</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>Keycloak Custom Theme Documentation</p>
+            <p class="footer-links">
+                <a href="https://github.com/Ro0t-set/keycloak-custom-theme">GitHub</a>
+                <span>•</span>
+                <a href="https://www.keycloak.org/docs/latest/">Keycloak Docs</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
