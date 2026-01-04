@@ -60,6 +60,7 @@
             <div class="code-block">
                 <div class="code-header">
                     <span>Dockerfile</span>
+                    <button class="copy-btn" data-code="FROM quay.io/keycloak/keycloak:26.1.5&#10;&#10;COPY ./custom/ /opt/keycloak/themes/custom/&#10;&#10;ENTRYPOINT [&quot;/opt/keycloak/bin/kc.sh&quot;]">Copy</button>
                 </div>
                 <pre><code>FROM quay.io/keycloak/keycloak:26.1.5
 
@@ -71,6 +72,10 @@ ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]</code></pre>
             <div class="info-card">
                 <h3>Build and run</h3>
                 <div class="code-block">
+                    <div class="code-header">
+                        <span></span>
+                        <button class="copy-btn" data-code="docker build -t keycloak-custom .&#10;&#10;docker run -p 8080:8080 \&#10;  -e KEYCLOAK_ADMIN=admin \&#10;  -e KEYCLOAK_ADMIN_PASSWORD=admin \&#10;  keycloak-custom start-dev">Copy</button>
+                    </div>
                     <pre><code>docker build -t keycloak-custom .
 
 docker run -p 8080:8080 \
@@ -100,7 +105,7 @@ docker run -p 8080:8080 \
             </div>
 
             <div class="screenshot-container">
-                <img src="../doc/image.png" alt="Keycloak Custom Theme Screenshot" class="screenshot">
+                <img src="image.png" alt="Keycloak Custom Theme Screenshot" class="screenshot">
             </div>
         </section>
 
@@ -111,6 +116,10 @@ docker run -p 8080:8080 \
                 <h3>Theme Properties</h3>
                 <p>The <code>theme.properties</code> file defines the theme configuration:</p>
                 <div class="code-block">
+                    <div class="code-header">
+                        <span></span>
+                        <button class="copy-btn" data-code="parent=keycloak&#10;import=common/keycloak&#10;&#10;# Custom styles - listed last to properly override parent styles&#10;styles=css/styles.css">Copy</button>
+                    </div>
                     <pre><code>parent=keycloak
 import=common/keycloak
 
@@ -123,6 +132,10 @@ styles=css/styles.css</code></pre>
                 <h3>Custom Favicon</h3>
                 <p>To add a custom favicon, place your <code>favicon.ico</code> in <code>custom/login/resources/img/</code> and override the <code>template.ftl</code> file to include:</p>
                 <div class="code-block">
+                    <div class="code-header">
+                        <span></span>
+                        <button class="copy-btn" data-code="&lt;link rel=&quot;icon&quot; href=&quot;${url.resourcesPath}/img/favicon.ico&quot; /&gt;">Copy</button>
+                    </div>
                     <pre><code>&lt;link rel="icon" href="${url.resourcesPath}/img/favicon.ico" /&gt;</code></pre>
                 </div>
                 <p>Note: The <code>favIcon</code> property in theme.properties only works for admin and account consoles, not login pages. See <a href="https://github.com/keycloak/keycloak/discussions/22642" target="_blank">this discussion</a> for more details.</p>
